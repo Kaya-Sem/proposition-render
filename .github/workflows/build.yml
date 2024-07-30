@@ -28,12 +28,19 @@ jobs:
     - name: Build
       run: go build -o proposition main.go
 
+    - name: Get Latest Commit Info
+      id: commit_info
+      run: |
+        echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: v1.0.0  # Replace with your release tag
-        release_name: Release v1.0.0  # Replace with your release name
+        tag_name: ${{ env.COMMIT_SHA }}
+        release_name: Release ${{ env.COMMIT_MESSAGE }}
         draft: false
         prerelease: false
       env:
