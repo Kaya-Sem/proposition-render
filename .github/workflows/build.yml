@@ -26,10 +26,10 @@ jobs:
       run: go mod tidy
 
     - name: Build
-      run: go build -o myapp main.go # Replace `myapp` with your desired output binary name
+      run: go build -o proposition main.go # Replace `myapp` with your desired output binary name
 
     - name: Archive the build
       uses: actions/upload-artifact@v3
       with:
-        name: myapp
-        path: myapp
+        name: proposition
+        path: proposition
