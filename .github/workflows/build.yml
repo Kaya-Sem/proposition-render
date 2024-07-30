@@ -26,7 +26,7 @@ jobs:
       run: go mod tidy
 
     - name: Build
-      run: go build -o proposition main.go # Replace `myapp` with your desired output binary name
+      run: go build -o proposition main.go
 
     - name: Archive the build
       uses: actions/upload-artifact@v3
@@ -50,8 +50,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./myapp
-        asset_name: myapp
+        asset_path: ./proposition
+        asset_name: proposition
         asset_content_type: application/octet-stream
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
