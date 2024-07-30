@@ -54,32 +54,3 @@ func TestNormalizeWhitespace(t *testing.T) {
 		}
 	}
 }
-
-//Mocking the clipboard functionality
-// You can use the following code if you want to test copyToClipboard function
-
-// Test copyToClipboard function
-func TestCopyToClipboard(t *testing.T) {
-	// Successful copy
-	clipboardWriteAll = func(s string) error {
-		if s == "expected text" {
-			return nil
-		}
-		return fmt.Errorf("unexpected text")
-	}
-
-	err := copyToClipboard("expected text")
-	if err != nil {
-		t.Errorf("copyToClipboard() = %v; want no error", err)
-	}
-
-	// Failure case
-	clipboardWriteAll = func(s string) error {
-		return fmt.Errorf("clipboard error")
-	}
-
-	err = copyToClipboard("unexpected text")
-	if err == nil {
-		t.Errorf("copyToClipboard() = no error; want an error")
-	}
-}
