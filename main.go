@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// symbols maps standard logical operators and quantifiers to their Unicode equivalents.
 var symbols = map[string]string{
 	"&&":     "∧",
 	"||":     "∨",
@@ -20,11 +21,11 @@ var symbols = map[string]string{
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Please provide a proposition string as an argument.")
+		fmt.Println("Usage: proposition \"<proposition>\"")
 		return
 	}
 
-	proposition := os.Args[1]
+	proposition := strings.Join(os.Args[1:], " ")
 	replaced := replaceAll(proposition)
 	replaced = normalizeWhitespace(replaced)
 	fmt.Println(replaced)
@@ -42,6 +43,7 @@ func copyToClipboard(input string) {
 	}
 }
 
+// replaceAll replaces logical operators and quantifiers with their Unicode equivalents.
 func replaceAll(proposition string) string {
 	for key, value := range symbols {
 		proposition = strings.Replace(proposition, key, value, -1)
@@ -50,6 +52,7 @@ func replaceAll(proposition string) string {
 	return proposition
 }
 
+// replaces multiple consecutive whitespace  (and newline )characters with a single space.
 func normalizeWhitespace(s string) string {
 	fields := strings.Fields(s)
 	return strings.Join(fields, " ")
