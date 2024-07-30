@@ -28,13 +28,6 @@ jobs:
     - name: Build
       run: go build -o proposition main.go
 
-    - name: Archive the build
-      uses: actions/upload-artifact@v3
-      with:
-        name: proposition
-        path: proposition
-
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
