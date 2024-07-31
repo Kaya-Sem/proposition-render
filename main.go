@@ -19,8 +19,10 @@ var symbols = map[string]string{
 	"and":    "⩓",
 }
 
+const NEEDED_ARGS int = 2
+
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) < NEEDED_ARGS {
 		fmt.Println("Usage: proposition \"<proposition>\"")
 		return
 	}
