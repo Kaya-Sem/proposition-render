@@ -28,6 +28,7 @@ func main() {
 	proposition := strings.Join(os.Args[1:], " ")
 	replaced := replaceAll(proposition)
 	replaced = normalizeWhitespace(replaced)
+	replaced = normalizeParentheses(replaced)
 	fmt.Println(replaced)
 
 	copyToClipboard(replaced)
@@ -50,6 +51,13 @@ func replaceAll(proposition string) string {
 	}
 
 	return proposition
+}
+
+// TODO: create tests for this function.
+func normalizeParentheses(s string) string {
+	s = strings.Replace(s, "( ", "(", -1)
+	s = strings.Replace(s, " )", ")", -1)
+	return s
 }
 
 // replaces multiple consecutive whitespace  (and newline )characters with a single space.
