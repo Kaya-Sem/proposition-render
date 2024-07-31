@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// symbols maps standard logical operators and quantifiers to their Unicode equivalents.
-var symbols = map[string]string{
+// propositionSymbols maps standard logical operators and quantifiers to their Unicode equivalents.
+var propositionSymbols = map[string]string{
 	"&&":     "∧",
 	"||":     "∨",
 	"==":     "≡",
@@ -19,7 +19,18 @@ var symbols = map[string]string{
 	"and":    "⩓",
 }
 
+var latexSymbols = map[string]string{
+	"&&":     "\\wedge",
+	"||":     "\\vee",
+	"==":     "\\eq",
+	"!=":     "\\neq",
+	"->":     "\\Rightarrow",
+	"forall": "\\forall",
+	"exists": "\\exists",
+}
+
 const NEEDED_ARGS int = 2
+const REPLACEMENT_OCCURANCES = -1 // -1 is all occurances
 
 func main() {
 	if len(os.Args) < NEEDED_ARGS {
@@ -28,9 +39,14 @@ func main() {
 	}
 
 	proposition := strings.Join(os.Args[1:], " ")
-	replaced := replaceAll(proposition)
+	replaced := replaceAll(proposition, propositionSymbols)
 	replaced = normalizeWhitespace(replaced)
 	replaced = normalizeParentheses(replaced)
+
+	latexProposition := proposition
+	latexProposition = createLatexString(latexProposition)
+	fmt.Println(latexProposition)
+
 	fmt.Println(replaced)
 
 	copyToClipboard(replaced)
@@ -47,9 +63,9 @@ func copyToClipboard(input string) {
 }
 
 // replaceAll replaces logical operators and quantifiers with their Unicode equivalents.
-func replaceAll(proposition string) string {
-	for key, value := range symbols {
-		proposition = strings.Replace(proposition, key, value, -1)
+func replaceAll(proposition string, symbols_map map[string]string) string {
+	for key, value := range symbols_map {
+		proposition = strings.Replace(proposition, key, value, REPLACEMENT_OCCURANCES)
 	}
 
 	return proposition
@@ -57,11 +73,9 @@ func replaceAll(proposition string) string {
 
 // TODO: create tests for this function.
 
-const OCCURANCES = -1 // -1 is all occurances
-
 func normalizeParentheses(s string) string {
-	s = strings.Replace(s, "( ", "(", OCCURANCES)
-	s = strings.Replace(s, " )", ")", OCCURANCES)
+	s = strings.Replace(s, "( ", "(", REPLACEMENT_OCCURANCES)
+	s = strings.Replace(s, " )", ")", REPLACEMENT_OCCURANCES)
 	return s
 }
 
@@ -71,4 +85,12 @@ const JOINING_STRING = " " // space
 func normalizeWhitespace(s string) string {
 	fields := strings.Fields(s)
 	return strings.Join(fields, JOINING_STRING)
+}
+
+func createLatexString(input string) string {
+	input = normalizeWhitespace(input)
+	input = normalizeParentheses(input)
+	input = "$" + input + "$"
+	input = replaceAll(input, latexSymbols)
+	return input
 }
