@@ -4,10 +4,6 @@ import (
 	"testing"
 )
 
-var clipboardWriteAll = func(s string) error {
-	return nil
-}
-
 // Test replaceAll function
 func TestReplaceAll(t *testing.T) {
 	tests := []struct {
@@ -52,4 +48,21 @@ func TestNormalizeWhitespace(t *testing.T) {
 			t.Errorf("normalizeWhitespace(%q) = %q; want %q", test.input, result, test.expected)
 		}
 	}
+}
+
+func TestNormalizeParentheses(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"( )", "()"},
+		{"( x -> y )", "(x -> y)"},
+	}
+	for _, test := range tests {
+		result := normalizeParentheses(test.input)
+		if result != test.expected {
+			t.Errorf("normalizeWhitespace(%q) = %q; want %q", test.input, result, test.expected)
+		}
+	}
+
 }
