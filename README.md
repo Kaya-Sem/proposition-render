@@ -11,3 +11,6 @@ and the program will give back two strings:
 
 - a Unicode string
 - a LaTex / MathJax string
+
+![image](https://github.com/user-attachments/assets/26b995cd-6229-422d-a2a8-b49ddc1047f0)
+
