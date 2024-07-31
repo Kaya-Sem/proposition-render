@@ -22,7 +22,7 @@ func TestReplaceAll(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := replaceAll(test.input)
+		result := replaceAll(test.input, propositionSymbols)
 		if result != test.expected {
 			t.Errorf("replaceAll(%q) = %q; want %q", test.input, result, test.expected)
 		}
