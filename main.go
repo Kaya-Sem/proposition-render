@@ -56,14 +56,19 @@ func replaceAll(proposition string) string {
 }
 
 // TODO: create tests for this function.
+
+const OCCURANCES = -1 // -1 is all occurances
+
 func normalizeParentheses(s string) string {
-	s = strings.Replace(s, "( ", "(", -1)
-	s = strings.Replace(s, " )", ")", -1)
+	s = strings.Replace(s, "( ", "(", OCCURANCES)
+	s = strings.Replace(s, " )", ")", OCCURANCES)
 	return s
 }
 
 // replaces multiple consecutive whitespace  (and newline )characters with a single space.
+const JOINING_STRING = " " // space
+
 func normalizeWhitespace(s string) string {
 	fields := strings.Fields(s)
-	return strings.Join(fields, " ")
+	return strings.Join(fields, JOINING_STRING)
 }
