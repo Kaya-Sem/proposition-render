@@ -87,6 +87,7 @@ func normalizeWhitespace(s string) string {
 	return strings.Join(fields, JoiningString)
 }
 
+// TODO: create tests
 func createLatexString(input string) string {
 	input = normalizeWhitespace(input)
 	input = normalizeParentheses(input)
