@@ -29,11 +29,11 @@ var latexSymbols = map[string]string{
 	"exists": "\\exists",
 }
 
-const NEEDED_ARGS int = 2
-const REPLACEMENT_OCCURANCES = -1 // -1 is all occurances
+const NeededArgs int = 2
+const ReplacementOccurances = -1 // -1 is all occurances
 
 func main() {
-	if len(os.Args) < NEEDED_ARGS {
+	if len(os.Args) < NeededArgs {
 		fmt.Println("Usage: proposition \"<proposition>\"")
 		return
 	}
@@ -63,9 +63,9 @@ func copyToClipboard(input string) {
 }
 
 // replaceAll replaces logical operators and quantifiers with their Unicode equivalents.
-func replaceAll(proposition string, symbols_map map[string]string) string {
-	for key, value := range symbols_map {
-		proposition = strings.Replace(proposition, key, value, REPLACEMENT_OCCURANCES)
+func replaceAll(proposition string, symbolsMap map[string]string) string {
+	for key, value := range symbolsMap {
+		proposition = strings.Replace(proposition, key, value, ReplacementOccurances)
 	}
 
 	return proposition
@@ -74,17 +74,17 @@ func replaceAll(proposition string, symbols_map map[string]string) string {
 // TODO: create tests for this function.
 
 func normalizeParentheses(s string) string {
-	s = strings.Replace(s, "( ", "(", REPLACEMENT_OCCURANCES)
-	s = strings.Replace(s, " )", ")", REPLACEMENT_OCCURANCES)
+	s = strings.Replace(s, "( ", "(", ReplacementOccurances)
+	s = strings.Replace(s, " )", ")", ReplacementOccurances)
 	return s
 }
 
 // replaces multiple consecutive whitespace  (and newline )characters with a single space.
-const JOINING_STRING = " " // space
+const JoiningString = " " // space
 
 func normalizeWhitespace(s string) string {
 	fields := strings.Fields(s)
-	return strings.Join(fields, JOINING_STRING)
+	return strings.Join(fields, JoiningString)
 }
 
 func createLatexString(input string) string {
